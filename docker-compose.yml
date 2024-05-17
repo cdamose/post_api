@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+  
+  postgres:
+    image: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: Looser1997$
+      PGDATA: /data/postgres
+      POSTGRES_DB: post
+    
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -d postgres" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+  post_svc:
+    image: post_svc:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./internal:/app
+      - ./db:/app/db
+    working_dir: /app
+    ports:
+      - "8080:8080"
+    environment:
+      POSTGRESS_ADDR: mysql  
+      POSTGRESS_USER: admin
+      MYSQL_PASSWORD: Looser1997$$
+      MYSQL_DATABASE: post
+      PORT: 8080
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: unless-stopped
+
+   
+  
+
+
+

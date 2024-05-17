@@ -1,1 +1,6 @@
-# post_api
+
+## To Run Applocation
+
+```bash
+docker-compose up
+
