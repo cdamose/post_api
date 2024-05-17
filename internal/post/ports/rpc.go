@@ -2,7 +2,6 @@ package ports
 
 import (
 	"context"
-	"fmt"
 	postv1 "post_api/internal/common/genproto/post/api/protobuf"
 	"post_api/internal/post/container"
 
@@ -38,11 +37,26 @@ func (p *PostServer) CreatePost(ctx context.Context, re *connect.Request[postv1.
 	return res, nil
 
 }
-func (p *PostServer) ReadPost(context.Context, *connect.Request[postv1.ReadPostRequest]) (*connect.Response[postv1.ReadPostResponse], error) {
-	return nil, nil
+func (p *PostServer) ReadPost(ctx context.Context, re *connect.Request[postv1.ReadPostRequest]) (*connect.Response[postv1.ReadPostResponse], error) {
+	dto_obj, err := p.Application.PostApplication.ReadPost(ctx, re.Msg.PostId)
+
+	if err != nil {
+		res := connect.NewResponse(&postv1.ReadPostResponse{
+			ErrorMessage: "Something went wrong... please try again later",
+		})
+		return res, nil
+	}
+	res := connect.NewResponse(&postv1.ReadPostResponse{
+		PostId:          dto_obj.PostID,
+		Title:           dto_obj.Title,
+		Content:         dto_obj.Content,
+		Author:          dto_obj.Author,
+		PublicationDate: dto_obj.PublicationDate.String(),
+		Tags:            dto_obj.Tags,
+	})
+	return res, nil
 }
 func (p *PostServer) UpdatePost(ctx context.Context, re *connect.Request[postv1.UpdatePostRequest]) (*connect.Response[postv1.UpdatePostResponse], error) {
-	fmt.Println(re.Msg.PostId)
 	dto_obj, err := p.Application.PostApplication.UpdatePost(ctx, re.Msg)
 
 	if err != nil {
@@ -59,8 +73,22 @@ func (p *PostServer) UpdatePost(ctx context.Context, re *connect.Request[postv1.
 	}
 	return res, nil
 }
-func (p *PostServer) DeletePost(context.Context, *connect.Request[postv1.DeletePostRequest]) (*connect.Response[postv1.DeletePostResponse], error) {
-	return nil, nil
+func (p *PostServer) DeletePost(ctx context.Context, re *connect.Request[postv1.DeletePostRequest]) (*connect.Response[postv1.DeletePostResponse], error) {
+	dto_obj, err := p.Application.PostApplication.DeletePost(ctx, re.Msg.PostId)
+
+	if err != nil {
+		res := connect.NewResponse(&postv1.DeletePostResponse{
+			ErrorMessage: "Something went wrong... please try again later",
+		})
+		return res, nil
+	}
+	res := connect.NewResponse(&postv1.DeletePostResponse{})
+	if dto_obj {
+		res.Msg.Success = true
+	} else {
+		res.Msg.ErrorMessage = "Something went wrong... please try again later"
+	}
+	return res, nil
 }
 
 // func (av *AuthServer) SignupWithPhoneNumber(ctx context.Context, re *connect.Request[authv1.PhoneNumber]) (*connect.Response[authv1.SignUpResponse], error) {

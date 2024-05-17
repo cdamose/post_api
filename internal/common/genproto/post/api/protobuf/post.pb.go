@@ -246,13 +246,13 @@ type ReadPostResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	PostId          string   `protobuf:"bytes,1,opt,name=post_id,json=postId,proto3" json:"post_id,omitempty"`
-	Title           string   `protobuf:"bytes,2,opt,name=title,proto3" json:"title,omitempty"`
-	Content         string   `protobuf:"bytes,3,opt,name=content,proto3" json:"content,omitempty"`
-	Author          string   `protobuf:"bytes,4,opt,name=author,proto3" json:"author,omitempty"`
-	PublicationDate string   `protobuf:"bytes,5,opt,name=publication_date,json=publicationDate,proto3" json:"publication_date,omitempty"`
-	Tags            []string `protobuf:"bytes,6,rep,name=tags,proto3" json:"tags,omitempty"`
-	ErrorMessage    string   `protobuf:"bytes,7,opt,name=error_message,json=errorMessage,proto3" json:"error_message,omitempty"`
+	PostId          string `protobuf:"bytes,1,opt,name=post_id,json=postId,proto3" json:"post_id,omitempty"`
+	Title           string `protobuf:"bytes,2,opt,name=title,proto3" json:"title,omitempty"`
+	Content         string `protobuf:"bytes,3,opt,name=content,proto3" json:"content,omitempty"`
+	Author          string `protobuf:"bytes,4,opt,name=author,proto3" json:"author,omitempty"`
+	PublicationDate string `protobuf:"bytes,5,opt,name=publication_date,json=publicationDate,proto3" json:"publication_date,omitempty"`
+	Tags            string `protobuf:"bytes,6,opt,name=tags,proto3" json:"tags,omitempty"`
+	ErrorMessage    string `protobuf:"bytes,7,opt,name=error_message,json=errorMessage,proto3" json:"error_message,omitempty"`
 }
 
 func (x *ReadPostResponse) Reset() {
@@ -322,11 +322,11 @@ func (x *ReadPostResponse) GetPublicationDate() string {
 	return ""
 }
 
-func (x *ReadPostResponse) GetTags() []string {
+func (x *ReadPostResponse) GetTags() string {
 	if x != nil {
 		return x.Tags
 	}
-	return nil
+	return ""
 }
 
 func (x *ReadPostResponse) GetErrorMessage() string {
@@ -614,7 +614,7 @@ var file_api_protobuf_post_proto_rawDesc = []byte{
 	0x62, 0x6c, 0x69, 0x63, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x5f, 0x64, 0x61, 0x74, 0x65, 0x18, 0x05,
 	0x20, 0x01, 0x28, 0x09, 0x52, 0x0f, 0x70, 0x75, 0x62, 0x6c, 0x69, 0x63, 0x61, 0x74, 0x69, 0x6f,
 	0x6e, 0x44, 0x61, 0x74, 0x65, 0x12, 0x12, 0x0a, 0x04, 0x74, 0x61, 0x67, 0x73, 0x18, 0x06, 0x20,
-	0x03, 0x28, 0x09, 0x52, 0x04, 0x74, 0x61, 0x67, 0x73, 0x12, 0x23, 0x0a, 0x0d, 0x65, 0x72, 0x72,
+	0x01, 0x28, 0x09, 0x52, 0x04, 0x74, 0x61, 0x67, 0x73, 0x12, 0x23, 0x0a, 0x0d, 0x65, 0x72, 0x72,
 	0x6f, 0x72, 0x5f, 0x6d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x18, 0x07, 0x20, 0x01, 0x28, 0x09,
 	0x52, 0x0c, 0x65, 0x72, 0x72, 0x6f, 0x72, 0x4d, 0x65, 0x73, 0x73, 0x61, 0x67, 0x65, 0x22, 0x88,
 	0x01, 0x0a, 0x11, 0x55, 0x70, 0x64, 0x61, 0x74, 0x65, 0x50, 0x6f, 0x73, 0x74, 0x52, 0x65, 0x71,
